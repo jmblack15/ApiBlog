@@ -1,35 +1,33 @@
-const express = require('express')
+const express = require('express');
+const morgan = require('morgan');
 const { findAvailablePort } = require('./utils/freePort.js')
 
 const app = express();
 const desiredPort = process.env.PORT ?? 8080;
 
-app.get('/', (req, res) => [
-  res.send('my server')
-])
+app.use(express.text())
+app.use(express.json())
+app.use(morgan('dev'))
+
 
 app.get('/blogs', (req, res) => {
-  res.json([
-    {
-      title: 'Backend With NodeJs',
-      text: 'to create a server use Express',
-    },
-    {
-      title: 'Frontend with React',
-      text: 'to worrk with react use NextJs',
-    },
-  ])
+  res.send('get blogs')
 })
 
-app.get('/blogs/:id', (req, res) => {
+app.post('/blogs', (req, res) => {
+  res.send('creat blog')
+})
 
-  const { id } = req.params;
+app.put('/blogs', (req, res) => {
+  res.send('update blog')
+})
 
-  res.json({
-    id,
-    title: 'Frontend with React',
-    text: 'to worrk with react use NextJs',
-  })
+app.patch('/blogs', (req, res) => {
+  res.send('update blogs')
+})
+
+app.delete('/blogs', (req, res) => {
+  res.send('delete blog')
 })
 
 
